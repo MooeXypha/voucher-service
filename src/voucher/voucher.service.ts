@@ -5,6 +5,7 @@ import { QueryFailedError } from 'typeorm';
 import { CreateVoucherDto } from './dto/create-voucher.dto';
 import { UpdateVoucherDto } from './dto/update-voucher.dto';
 import { Voucher } from './entities/voucher.entity';
+import { QueryVoucherDto } from './dto/query-voucher.dto';
 
 @Injectable()
 export class VoucherService {
@@ -32,9 +33,49 @@ export class VoucherService {
     }
   }
 
-  async findAll(): Promise<Voucher[]> {
-    return this.voucherRepository.find();
+async findAll(query: QueryVoucherDto) {
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 10;
+  const skip = (page - 1) * limit;
+
+  const queryBuilder = this.voucherRepository.createQueryBuilder('voucher');
+
+  if (query.search) {
+    queryBuilder.andWhere(
+      `(
+        voucher.id ILIKE :search
+        OR voucher.buyerName ILIKE :search
+        OR voucher.buyerPhoneNumber ILIKE :search
+        OR voucher.accountUserName ILIKE :search
+        OR voucher.accountCategory ILIKE :search
+        OR voucher.paymentMethod ILIKE :search
+        OR voucher.remark ILIKE :search
+      )`,
+      { search: `%${query.search}%` },
+    );
   }
+
+  if (query.serviceType) {
+    queryBuilder.andWhere('voucher.serviceType ILIKE :serviceType', {
+      serviceType: `%${query.serviceType}%`,
+    });
+  }
+
+  queryBuilder.orderBy('voucher.createdAt', 'DESC');
+  queryBuilder.skip(skip).take(limit);
+
+  const [data, total] = await queryBuilder.getManyAndCount();
+
+  return {
+    data,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+}
 
   async findOne(id: string): Promise<Voucher> {
     const voucher = await this.voucherRepository.findOne({ where: { id } });
