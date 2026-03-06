@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { VoucherService } from './voucher.service';
 import { CreateVoucherDto } from './dto/create-voucher.dto';
 import { UpdateVoucherDto } from './dto/update-voucher.dto';
+import { QueryVoucherDto } from './dto/query-voucher.dto';
 
 @Controller('voucher')
 export class VoucherController {
@@ -13,8 +14,8 @@ export class VoucherController {
   }
 
   @Get()
-  findAll() {
-    return this.voucherService.findAll();
+  findAll(@Query() query: QueryVoucherDto) {
+    return this.voucherService.findAll(query);
   }
 
   @Get(':id')
@@ -22,7 +23,7 @@ export class VoucherController {
     return this.voucherService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateVoucherDto: UpdateVoucherDto) {
     return this.voucherService.update(id, updateVoucherDto);
   }
