@@ -32,7 +32,7 @@ export class Voucher {
   @Column({ type: 'boolean', default: false })
   prepaid: boolean;
 
-  @Column({ name: 'payment_method', type: 'varchar', length: 50 })
+  @Column({ name: 'payment_method', type: 'varchar', length: 30 })
   paymentMethod: string;
 
   @Column({ name: 'payment_date', type: 'timestamp' })

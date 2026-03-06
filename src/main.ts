@@ -19,6 +19,8 @@ async function bootstrap() {
   const allowedOrigins = new Set([...staticOrigins, ...configuredOrigins]);
   const localDevOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
   
+
+  
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin) {
