@@ -4,7 +4,7 @@ import { CreateVoucherDto } from './dto/create-voucher.dto';
 import { UpdateVoucherDto } from './dto/update-voucher.dto';
 import { QueryVoucherDto } from './dto/query-voucher.dto';
 
-@Controller('voucher')
+@Controller('vouchers')
 export class VoucherController {
   constructor(private readonly voucherService: VoucherService) {}
 
