@@ -11,10 +11,10 @@ async function bootstrap() {
     .filter(Boolean);
 
   const staticOrigins = [
-    'http://localhost:3039',
-    'http://localhost:5173',
-    'https://your-frontend-site.onrender.com',
-  ];
+  'http://localhost:3039',
+  'http://localhost:5173',
+  'https://voucher-ui-layout.onrender.com',
+];
 
   const allowedOrigins = new Set([...staticOrigins, ...configuredOrigins]);
   const localDevOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
