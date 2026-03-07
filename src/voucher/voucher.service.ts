@@ -80,7 +80,7 @@ async findAll(query: QueryVoucherDto) {
   async findOne(id: string): Promise<Voucher> {
     const voucher = await this.voucherRepository.findOne({ where: { id } });
     if (!voucher) {
-      throw new NotFoundException(`Voucher with ID ${id} not found`);
+      throw new NotFoundException(`Voucher with ID Number ${id} not found`);
     }
     return voucher;
   }
@@ -88,7 +88,7 @@ async findAll(query: QueryVoucherDto) {
   async update(id: string, updateVoucherDto: UpdateVoucherDto): Promise<Voucher> {
     const voucher = await this.voucherRepository.findOne({ where: { id } });
     if (!voucher) {
-      throw new NotFoundException(`Voucher with ID ${id} not found`);
+      throw new NotFoundException(`Voucher with ID Number ${id} not found`);
     }
     Object.assign(voucher, updateVoucherDto);
     return this.voucherRepository.save(voucher);
@@ -97,7 +97,7 @@ async findAll(query: QueryVoucherDto) {
   async remove(id: string): Promise<{ message: string }> {
     const result = await this.voucherRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Voucher with ID ${id} not found`);
+      throw new NotFoundException(`Voucher with ID Number ${id} not found`);
     }
     return { message: 'Voucher deleted successfully' };
   }
