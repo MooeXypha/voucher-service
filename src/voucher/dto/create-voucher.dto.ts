@@ -18,8 +18,8 @@ export class CreateVoucherDto {
 
   @IsString()
   @IsNotEmpty()
-  @Matches(/^(09|\+959)\d{7,9}$/, {
-    message: 'buyerPhoneNumber format is invalid',
+  @Matches(/^\+[1-9]\d{6,14}$/, {
+    message: 'buyerPhoneNumber must be a valid international phone number (E.164 format, e.g. +14155552671)',
   })
   buyerPhoneNumber: string;
 
