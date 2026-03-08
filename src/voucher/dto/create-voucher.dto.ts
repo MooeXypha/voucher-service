@@ -18,8 +18,10 @@ export class CreateVoucherDto {
 
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\+[1-9]\d{6,14}$/, {
-    message: 'buyerPhoneNumber must be a valid international phone number (E.164 format, e.g. +14155552671)',
+  @MaxLength(20)
+  @Matches(/^(?=(?:\D*\d){6,20}\D*$)\+?[\d\s()-]+$/, {
+    message:
+      'buyerPhoneNumber format is invalid. Use 6-20 digits and optional +, spaces, dashes, or parentheses',
   })
   buyerPhoneNumber: string;
 
